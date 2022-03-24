@@ -1,15 +1,17 @@
 package LessonThreeMediumBattleship;
 import java.util.Scanner;
 
-class Position {
-    final Coordinate start;
-    final Coordinate stop;
+class Position  {
+    private Coordinate start;
+    private  Coordinate stop;
 
-    Position(String start, String stop) throws WrongLocationException {
-        Coordinate firstCoordinate = new Coordinate(start);
-        Coordinate secondCoordinate = new Coordinate(stop);
 
-        if (firstCoordinate.x < secondCoordinate.x || firstCoordinate.y < secondCoordinate.y) {
+    Position(String start, String stop) {
+        Coordinate firstCoordinate=Coordinate.readInput(start);
+        Coordinate secondCoordinate=Coordinate.readInput(stop);
+
+
+        if (firstCoordinate.getX() < secondCoordinate.getX() || firstCoordinate.getY() < secondCoordinate.getY()) {
             this.start = firstCoordinate;
             this.stop = secondCoordinate;
         } else {
@@ -18,10 +20,28 @@ class Position {
         }
     }
 
-    static Position readPosition() throws WrongLocationException {
+    static Position readPosition()  {
         Scanner scanner = new Scanner(System.in);
         String start = scanner.next();
         String stop = scanner.next();
         return new Position(start, stop);
+    }
+
+
+
+    public Coordinate getStart() {
+        return start;
+    }
+
+    public Coordinate getStop() {
+        return stop;
+    }
+
+    public void setStart(Coordinate start) {
+        this.start = start;
+    }
+
+    public void setStop(Coordinate stop) {
+        this.stop = stop;
     }
 }

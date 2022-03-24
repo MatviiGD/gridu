@@ -55,23 +55,21 @@ class Player {
     }
 
     private boolean isValidSize(Position position, int size) {
-        if (position.start.x == position.stop.x) {
-            return size == position.stop.y - position.start.y + 1;
-        } else if (position.start.y == position.stop.y) {
-            return size == position.stop.x - position.start.x + 1;
+        if (position.getStart().getX() == position.getStop().getX()) {
+            return size == position.getStop().getY() - position.getStart().getY() + 1;
+        } else if (position.getStart().getY() == position.getStop().getY()) {
+            return size == position.getStop().getX() - position.getStart().getX() + 1;
         } else {
             return false;
         }
     }
 
     private boolean areCollisions(Position position, int size) {
-        int start_x = position.start.x;
-        int start_y = position.start.y;
-        int stop_x = position.stop.x;
-        int stop_y = position.stop.y;
+        int start_x = position.getStart().getX();
+        int start_y = position.getStart().getY();
+        int stop_x = position.getStop().getX();
+        int stop_y = position.getStop().getY();
 
-        assert start_x == stop_x || start_y == stop_y;
-        assert stop_x - start_x + 1 == size || stop_y - start_y + 1 == size;
 
         if (start_x == stop_x) {
             for (int y = start_y; y != stop_y + 1; y++) {
@@ -108,7 +106,9 @@ class Player {
                 if (board[y + shift.y][x + shift.x].equals("O")) {
                     return true;
                 }
-            } catch (ArrayIndexOutOfBoundsException ignored) {}
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+                System.out.println("you so close");
+            }
         }
 
         return false;
@@ -118,20 +118,19 @@ class Player {
         Position position = Position.readPosition();
 
         if (!isValidSize(position, size)) {
-            throw new WrongLengthException();
+            throw new WrongLengthException("Error! Wrong length of the Submarine! Try again:");
         }
 
         if (!areCollisions(position, size)) {
-            throw new TooCloseException();
+            throw new TooCloseException("Error! You placed it too close to another ship.Try again:");
         }
 
-        int start_x = position.start.x;
-        int start_y = position.start.y;
-        int stop_x = position.stop.x;
-        int stop_y = position.stop.y;
+        int start_x = position.getStart().getX();
+        int start_y = position.getStart().getY();
+        int stop_x = position.getStop().getX();
+        int stop_y = position.getStop().getY();
 
-        assert start_x == stop_x || start_y == stop_y;
-        assert stop_x - start_x + 1 == size || stop_y - start_y + 1 == size;
+
 
         if (start_x == stop_x) {
             for (int y = start_y; y != stop_y + 1; y++) {
@@ -202,13 +201,13 @@ class Player {
     }
 
     boolean shipIsStillAfloat(Coordinate coordinate) {
-        return hasNeighbors(coordinate.x, coordinate.y);
+        return hasNeighbors(coordinate.getX(), coordinate.getY());
     }
 
     public boolean hasShips() {
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 10; x++) {
-                if (board[y][x].equals("O")) {
+                if ("O".equals(board[y][x])) {
                     return true;
                 }
             }
