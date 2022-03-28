@@ -5,16 +5,5 @@ public class MediumBattleshipMain {
         Game game = new Game();
         game.placeShips();
         game.play();
-
-
     }
-
 }
-
-
-
-
-
-
-
-

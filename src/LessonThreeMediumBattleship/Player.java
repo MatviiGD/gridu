@@ -1,13 +1,12 @@
 package LessonThreeMediumBattleship;
-
 import java.util.Arrays;
 
 class Player {
-    final String name;
-    final String[][] board = new String[10][];
-    final String[][] opponent_view = new String[10][];
-    final String[] ROW_KEYS = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
-    final Ship[] SHIPS = {
+    private String name;
+    private String[][] board = new String[10][];
+    private String[][] opponent_view = new String[10][];
+    private String[] ROW_KEYS = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+    private Ship[] SHIPS = {
             new Ship("Aircraft Carrier", 5),
             new Ship("Battleship", 4),
             new Ship("Submarine", 3),
@@ -17,21 +16,29 @@ class Player {
 
     Player(String name) {
         this.name = name;
+        this.fillBoard();
+        this.fillOpponentView();
 
+    }
+
+    public void fillBoard() {
         for (int y = 0; y < 10; y++) {
             String[] row = new String[10];
             Arrays.fill(row, "~");
             board[y] = row;
         }
+    }
 
+    public void fillOpponentView() {
         for (int y = 0; y < 10; y++) {
             String[] row = new String[10];
             Arrays.fill(row, "~");
             opponent_view[y] = row;
         }
+
     }
 
-   public void printBoard(String[][] board) {
+    private void printBoard(String[][] board) {
         System.out.print(" ");
         for (int x = 1; x < 11; x++) {
             System.out.print(" " + x);
@@ -49,8 +56,7 @@ class Player {
         System.out.println();
     }
 
-
-   public void printBoards() {
+    private void printBoards() {
         printBoard(opponent_view);
         System.out.println("---------------------");
         printBoard(board);
@@ -90,7 +96,6 @@ class Player {
         return true;
     }
 
-
     private boolean hasNeighbors(int x, int y) {
         Shift[] shifts = {
                 new Shift(-1, 1),
@@ -117,7 +122,7 @@ class Player {
         return false;
     }
 
-  public   void placeShip(int size) throws WrongLocationException, TooCloseException, WrongLengthException {
+    public void placeShip(int size) throws WrongLocationException, TooCloseException, WrongLengthException {
         Position position = Position.readPosition();
 
         if (!isValidSize(position, size)) {
@@ -145,7 +150,7 @@ class Player {
         }
     }
 
-   public void placeShips() {
+    public void placeShips() {
         System.out.println(name + ", place your ships on the game field");
         System.out.println();
         printBoard(board);
@@ -175,7 +180,7 @@ class Player {
                     System.out.println("Error! You placed it too close to another one. Try again:");
                 }
             }
-                System.out.println();
+            System.out.println();
 
             System.out.println();
             printBoard(board);// на друкувало розміщений корабель тобто той вірний
@@ -183,7 +188,7 @@ class Player {
         }
     }
 
-    Coordinate fire() {
+    public Coordinate fire() {
         Coordinate coordinate;
 
         printBoards();
@@ -207,7 +212,7 @@ class Player {
         return coordinate;
     }
 
-    boolean shipIsStillAfloat(Coordinate coordinate) {
+    public boolean shipIsStillAfloat(Coordinate coordinate) {
         return hasNeighbors(coordinate.getX(), coordinate.getY());
     }
 
@@ -221,6 +226,44 @@ class Player {
         }
         return false;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String[][] getBoard() {
+        return board;
+    }
+
+    public void setBoard(String[][] board) {
+        this.board = board;
+    }
+
+    public String[][] getOpponent_view() {
+        return opponent_view;
+    }
+
+    public void setOpponent_view(String[][] opponent_view) {
+        this.opponent_view = opponent_view;
+    }
+
+    public String[] getROW_KEYS() {
+        return ROW_KEYS;
+    }
+
+    public void setROW_KEYS(String[] ROW_KEYS) {
+        this.ROW_KEYS = ROW_KEYS;
+    }
+
+    public Ship[] getSHIPS() {
+        return SHIPS;
+    }
+
+    public void setSHIPS(Ship[] SHIPS) {
+        this.SHIPS = SHIPS;
+    }
 }
-
-

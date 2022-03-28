@@ -1,15 +1,14 @@
 package LessonThreeMediumBattleship;
-
 import java.util.Scanner;
 
-class Position  {
+class Position {
     private Coordinate start;
-    private  Coordinate stop;
+    private Coordinate stop;
 
 
     Position(String start, String stop) {
-        Coordinate firstCoordinate=Coordinate.readInput(start);
-        Coordinate secondCoordinate=Coordinate.readInput(stop);
+        Coordinate firstCoordinate = Coordinate.readInput(start);
+        Coordinate secondCoordinate = Coordinate.readInput(stop);
 
 
         if (firstCoordinate.getX() < secondCoordinate.getX() || firstCoordinate.getY() < secondCoordinate.getY()) {
@@ -21,13 +20,12 @@ class Position  {
         }
     }
 
-    static Position readPosition()  {
+    static Position readPosition() {
         Scanner scanner = new Scanner(System.in);
         String start = scanner.next();
         String stop = scanner.next();
         return new Position(start, stop);
     }
-
 
 
     public Coordinate getStart() {
