@@ -11,6 +11,7 @@ class Coordinate {
 
     }
     public static Coordinate readInput(String input) {
+
         int x = input.endsWith("10") ? 9 : input.charAt(1) - 49;
         int y = input.charAt(0) - 65;
         checkCoordinate(input, x, y);

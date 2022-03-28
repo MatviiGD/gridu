@@ -1,4 +1,5 @@
 package LessonThreeMediumBattleship;
+
 import java.util.Arrays;
 
 class Player {
@@ -30,7 +31,7 @@ class Player {
         }
     }
 
-    void printBoard(String[][] board) {
+   public void printBoard(String[][] board) {
         System.out.print(" ");
         for (int x = 1; x < 11; x++) {
             System.out.print(" " + x);
@@ -48,7 +49,8 @@ class Player {
         System.out.println();
     }
 
-    void printBoards() {
+
+   public void printBoards() {
         printBoard(opponent_view);
         System.out.println("---------------------");
         printBoard(board);
@@ -104,6 +106,7 @@ class Player {
         for (Shift shift : shifts) {
             try {
                 if (board[y + shift.y][x + shift.x].equals("O")) {
+
                     return true;
                 }
             } catch (ArrayIndexOutOfBoundsException ignored) {
@@ -114,7 +117,7 @@ class Player {
         return false;
     }
 
-    void placeShip(int size) throws WrongLocationException, TooCloseException, WrongLengthException {
+  public   void placeShip(int size) throws WrongLocationException, TooCloseException, WrongLengthException {
         Position position = Position.readPosition();
 
         if (!isValidSize(position, size)) {
@@ -131,7 +134,6 @@ class Player {
         int stop_y = position.getStop().getY();
 
 
-
         if (start_x == stop_x) {
             for (int y = start_y; y != stop_y + 1; y++) {
                 board[y][start_x] = "O";
@@ -143,7 +145,7 @@ class Player {
         }
     }
 
-    void placeShips() {
+   public void placeShips() {
         System.out.println(name + ", place your ships on the game field");
         System.out.println();
         printBoard(board);
@@ -152,11 +154,15 @@ class Player {
             System.out.printf("Enter the coordinates of the %s (%d cells):", ship.name, ship.size);
             System.out.println();
             System.out.println();
+            //1)коли без ВАЙЛУ і  користувач  вводить не правильні дані ловиться кетч і береться наступний корабель
+            //2)коли є ВАЙЛ користувач  ставить той корабель стільки, скільки треба до поки не поставить без помилки
+            //3)бо якщо без вайлу я пропусаю той корабель і забираю можливість у користувача,
+            // гравця ввести ще раз коректні дані для розміщення корабля
 
             while (true) {
                 try {
-                    placeShip(ship.size);
-                    break;
+                    placeShip(ship.size);//якщо в цьому методі помилка не правильно поставив зловився кетч
+                    break;//якщо в методі placeShip буде без помилок  ми перейдемо в рядок 178 і далі по рядку
                 } catch (WrongLengthException e) {
                     System.out.println();
                     System.out.printf("Error! Wrong length of the %s! Try again:", ship.name);
@@ -168,11 +174,12 @@ class Player {
                     System.out.println();
                     System.out.println("Error! You placed it too close to another one. Try again:");
                 }
-                System.out.println();
             }
+                System.out.println();
 
             System.out.println();
-            printBoard(board);
+            printBoard(board);// на друкувало розміщений корабель тобто той вірний
+            // і пішло взяло наступний корабель якщо без помилки
         }
     }
 
@@ -215,3 +222,5 @@ class Player {
         return false;
     }
 }
+
+

@@ -11,8 +11,11 @@ class Game {
     }
 
    private void passTurn() {
+     System.out.println("The game starts!");
         System.out.println("Press Enter and pass the move to another player");
         System.out.println("...");
+        System.out.println("Player 2, place your ships to the game field");
+
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
     }
