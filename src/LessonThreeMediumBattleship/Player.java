@@ -1,4 +1,5 @@
 package LessonThreeMediumBattleship;
+
 import java.util.Arrays;
 
 class Player {
@@ -14,11 +15,10 @@ class Player {
             new Ship("Destroyer", 2)
     };
 
-    Player(String name) {
+    public Player(String name) {
         this.name = name;
         this.fillBoard();
         this.fillOpponentView();
-
     }
 
     public void fillBoard() {
@@ -38,7 +38,7 @@ class Player {
 
     }
 
-    private void printBoard(String[][] board) {
+    public void printBoard(String[][] board) {
         System.out.print(" ");
         for (int x = 1; x < 11; x++) {
             System.out.print(" " + x);
@@ -110,7 +110,7 @@ class Player {
 
         for (Shift shift : shifts) {
             try {
-                if (board[y + shift.y][x + shift.x].equals("O")) {
+                if (board[y + shift.getY()][x + shift.getX()].equals("O")) {
 
                     return true;
                 }
@@ -156,7 +156,7 @@ class Player {
         printBoard(board);
 
         for (Ship ship : SHIPS) {
-            System.out.printf("Enter the coordinates of the %s (%d cells):", ship.name, ship.size);
+            System.out.printf("Enter the coordinates of the %s (%d cells):", ship.getName(), ship.getSize());
             System.out.println();
             System.out.println();
             //1)коли без ВАЙЛУ і  користувач  вводить не правильні дані ловиться кетч і береться наступний корабель
@@ -166,11 +166,11 @@ class Player {
 
             while (true) {
                 try {
-                    placeShip(ship.size);//якщо в цьому методі помилка не правильно поставив зловився кетч
+                    placeShip(ship.getSize());//якщо в цьому методі помилка не правильно поставив зловився кетч
                     break;//якщо в методі placeShip буде без помилок  ми перейдемо в рядок 178 і далі по рядку
                 } catch (WrongLengthException e) {
                     System.out.println();
-                    System.out.printf("Error! Wrong length of the %s! Try again:", ship.name);
+                    System.out.printf("Error! Wrong length of the %s! Try again:", ship.getName());
                     System.out.println();
                 } catch (WrongLocationException e) {
                     System.out.println();

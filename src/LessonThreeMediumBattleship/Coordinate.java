@@ -1,4 +1,5 @@
 package LessonThreeMediumBattleship;
+
 import java.util.Scanner;
 
 class Coordinate {
@@ -26,7 +27,7 @@ class Coordinate {
     }
 
     private static void checkCoordinate(String input, int x, int y) {
-        if (x > 9 || y < 0 || y > 9 || (input.length() == 3 && !input.endsWith("10"))) {
+        if ((x > 9 || y < 0 || y > 9) || (input.length() == 3 && !input.endsWith("10"))) {
             try {
                 throw new WrongLocationException("Error! Wrong ship location! Try again:");
             } catch (WrongLocationException e) {
@@ -34,7 +35,6 @@ class Coordinate {
             }
         }
     }
-
 
     public int getX() {
         return x;

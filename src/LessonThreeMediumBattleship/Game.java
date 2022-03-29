@@ -1,4 +1,5 @@
 package LessonThreeMediumBattleship;
+
 import java.util.Scanner;
 
 class Game {
@@ -26,6 +27,14 @@ class Game {
 
         player2.placeShips();
         passTurn();
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
     }
 
     private void fire(Player fromPlayer, Player toPlayer) {

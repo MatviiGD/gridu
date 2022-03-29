@@ -1,4 +1,5 @@
 package LessonThreeMediumBattleship;
+
 import java.util.Scanner;
 
 class Position {
