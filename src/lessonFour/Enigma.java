@@ -36,7 +36,7 @@ class Enigma {
     // вивести результати шифрування /дешифрування в STDERR of "-out"
 
     private static void output(String message, String outPath) {
-        if (outPath.equals("")) {
+        if ("".equals(outPath)) {
             System.out.println(message);
         } else {
             File file = new File(outPath);
@@ -53,7 +53,7 @@ class Enigma {
 
     //  прочитати дані з файлу "-in" якщо він був а  "-data"  не було дано
     private void readData() {
-        if (data.equals("")) {  // prefer "-data" over "-in"
+        if ("".equals(data)) {  // prefer "-data" over "-in"
             String fileName = inPath;
             File file = new File(fileName);
             try (Scanner scanner = new Scanner(file)) {

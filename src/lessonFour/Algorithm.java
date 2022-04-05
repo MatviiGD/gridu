@@ -1,8 +1,8 @@
 package lessonFour;
 
-abstract class Algorithm {
+public abstract class Algorithm {
 
-    abstract String encrypt(String message, int key);
+    public abstract String encrypt(String message, int key);
 
-    abstract String decipher(String message, int key);
+    public abstract String decipher(String message, int key);
 }
