@@ -4,7 +4,7 @@ import java.sql.*;
 
 
 public class Database {
-    public Connection connection;
+    private Connection connection;
 
     public Database(String[] args) {
         connectToDatabase(args.length > 1 && "-databaseFileName".equals(args[0]) ? args[1] : "ChallengingTaskCarSharing");
@@ -45,12 +45,18 @@ public class Database {
     }
 
     protected void disconnect() {
-        if (connection == null) return;
+        if (connection == null) {
+            return;
+        }
         try {
             connection.close();
         } catch (SQLException e) {
             System.err.println("Error while disconnecting: " + e.getMessage());
         }
         connection = null;
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

@@ -15,7 +15,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public void addCustomer(Customer customer) {
-        try (var statement = database.connection.prepareStatement("INSERT INTO customer(name) VALUES ?;")) {
+        try (var statement = database.getConnection().prepareStatement("INSERT INTO customer(name) VALUES ?;")) {
             statement.setString(1, customer.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -25,10 +25,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public List<Customer> getAllCustomers() {
-        var customers = new LinkedList<Customer>();
-        try (var statement = database.connection.prepareStatement("SELECT * FROM customer;")) {
+        List<Customer> customers = new LinkedList<Customer>();
+        try (var statement = database.getConnection().prepareStatement("SELECT * FROM customer;")) {
             var rs = statement.executeQuery();
-            while (rs.next()) customers.add(new Customer(rs.getString("name")));
+            while (rs.next()){
+                customers.add(new Customer(rs.getString("name")));
+            }
         } catch (SQLException e) {
             System.err.println("Error while retrieving customer data: " + e.getMessage());
         }
@@ -37,10 +39,13 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public void updateRentedCar(Car car, Customer customer) {
-        try (var statement = database.connection
+        try (var statement = database.getConnection()
                 .prepareStatement("UPDATE customer SET rented_car_id = ? WHERE name = ?;")) {
-            if (car == null) statement.setNull(1, 1);
-            else statement.setInt(1, car.getId());
+            if (car == null){
+                statement.setNull(1, 1);
+            } else{
+                statement.setInt(1, car.getId());
+            }
             statement.setString(2, customer.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
