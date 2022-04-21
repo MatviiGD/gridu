@@ -12,7 +12,7 @@ public class Database {
     }
 
     private void createTables() {
-        try (var statement = connection.createStatement()) {
+        try (Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS company (" +
                     "id INT PRIMARY KEY AUTO_INCREMENT, " +
                     "name VARCHAR(60) NOT NULL UNIQUE);" +
@@ -44,7 +44,7 @@ public class Database {
         }
     }
 
-    protected void disconnect() {
+    public void disconnect() {
         if (connection == null) {
             return;
         }

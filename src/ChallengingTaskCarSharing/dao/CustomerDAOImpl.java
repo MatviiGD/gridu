@@ -3,6 +3,8 @@ package ChallengingTaskCarSharing.dao;
 import ChallengingTaskCarSharing.Database;
 import ChallengingTaskCarSharing.entity.*;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -15,7 +17,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public void addCustomer(Customer customer) {
-        try (var statement = database.getConnection().prepareStatement("INSERT INTO customer(name) VALUES ?;")) {
+        try (PreparedStatement statement = database.getConnection().prepareStatement("INSERT INTO customer(name) VALUES ?;")) {
             statement.setString(1, customer.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -26,8 +28,8 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public List<Customer> getAllCustomers() {
         List<Customer> customers = new LinkedList<Customer>();
-        try (var statement = database.getConnection().prepareStatement("SELECT * FROM customer;")) {
-            var rs = statement.executeQuery();
+        try (PreparedStatement statement = database.getConnection().prepareStatement("SELECT * FROM customer;")) {
+            ResultSet rs = statement.executeQuery();
             while (rs.next()){
                 customers.add(new Customer(rs.getString("name")));
             }
@@ -39,7 +41,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public void updateRentedCar(Car car, Customer customer) {
-        try (var statement = database.getConnection()
+        try (PreparedStatement statement = database.getConnection()
                 .prepareStatement("UPDATE customer SET rented_car_id = ? WHERE name = ?;")) {
             if (car == null){
                 statement.setNull(1, 1);

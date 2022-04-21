@@ -4,6 +4,8 @@ package ChallengingTaskCarSharing.dao;
 import ChallengingTaskCarSharing.Database;
 import ChallengingTaskCarSharing.entity.Company;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -16,7 +18,7 @@ public class CompanyDAOImpl implements CompanyDAO {
 
     @Override
     public void addCompany(Company company) {
-        try (var statement = database.getConnection().prepareStatement("INSERT INTO company(name) VALUES ?;")) {
+        try (PreparedStatement statement = database.getConnection().prepareStatement("INSERT INTO company(name) VALUES ?;")) {
             statement.setString(1, company.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -27,8 +29,8 @@ public class CompanyDAOImpl implements CompanyDAO {
     @Override
     public List<Company> getAllCompanies() {
         List<Company> companies = new LinkedList<Company>();
-        try (var statement = database.getConnection().prepareStatement("SELECT * FROM company;")) {
-            var rs = statement.executeQuery();
+        try (PreparedStatement statement = database.getConnection().prepareStatement("SELECT * FROM company;")) {
+             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 companies.add(new Company(rs.getInt("id"), rs.getString("name")));
             }

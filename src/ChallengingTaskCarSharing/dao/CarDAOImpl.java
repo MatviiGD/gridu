@@ -3,6 +3,8 @@ package ChallengingTaskCarSharing.dao;
 import ChallengingTaskCarSharing.Database;
 import ChallengingTaskCarSharing.entity.*;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -15,7 +17,7 @@ public class CarDAOImpl implements CarDAO {
 
     @Override
     public void addCar(Car car) {
-        try (var statement = database.getConnection().prepareStatement("INSERT INTO car(name,company_id) VALUES (?,?);")) {
+        try (PreparedStatement statement = database.getConnection().prepareStatement("INSERT INTO car(name,company_id) VALUES (?,?);")) {
             statement.setString(1, car.getName());
             statement.setInt(2, car.getCompanyId());
             statement.executeUpdate();
@@ -27,9 +29,9 @@ public class CarDAOImpl implements CarDAO {
     @Override
     public List<Car> getAllCompanyCars(Company company) {
         LinkedList<Car> cars = new LinkedList<Car>();
-        try (var statement = database.getConnection().prepareStatement("SELECT * FROM car WHERE company_id = ?;")) {
+        try (PreparedStatement statement = database.getConnection().prepareStatement("SELECT * FROM car WHERE company_id = ?;")) {
             statement.setInt(1, company.getId());
-            var rs = statement.executeQuery();
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 cars.add(new Car(rs.getInt("id"), rs.getString("name"), rs.getInt("company_id")));
             }
@@ -42,8 +44,8 @@ public class CarDAOImpl implements CarDAO {
     @Override
     public List<Car> getAllAvailableCompanyCars() {
         LinkedList<Car> availableCars = new LinkedList<Car>();
-        try (var statement = database.getConnection().prepareStatement("SELECT * FROM car " + "LEFT JOIN customer ON car.id = customer.rented_car_id WHERE customer.name IS NULL;")) {
-            var rs = statement.executeQuery();
+        try (PreparedStatement statement = database.getConnection().prepareStatement("SELECT * FROM car " + "LEFT JOIN customer ON car.id = customer.rented_car_id WHERE customer.name IS NULL;")) {
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 availableCars.add(new Car(rs.getInt("id"), rs.getString("name"), rs.getInt("company_id")));
             }

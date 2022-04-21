@@ -10,9 +10,9 @@ public class MenuView {
     private final MenuService service;
 
     public MenuView(Database database) {
-        var carDAO = new CarDAOImpl(database);
-        var companyDAO = new CompanyDAOImpl(database);
-        var customerDAO = new CustomerDAOImpl(database);
+        CarDAOImpl carDAO = new CarDAOImpl(database);
+        CompanyDAOImpl companyDAO = new CompanyDAOImpl(database);
+        CustomerDAOImpl customerDAO = new CustomerDAOImpl(database);
         this.service = new MenuService(carDAO, companyDAO, customerDAO, this);
         mainMenu();
     }
@@ -52,7 +52,7 @@ public class MenuView {
         }
     }
 
-    void customerMenu(Customer customer) {
+    public void customerMenu(Customer customer) {
         while (true) {
             System.out.println("\n1. Rent a car\n2. Return a rented car\n3. My rented car\n0. Back");
             int input= Integer.parseInt(sc.next());
@@ -71,7 +71,7 @@ public class MenuView {
         }
     }
 
-    void companyMenu(Company company) {
+    public void companyMenu(Company company) {
         System.out.printf("'%s' company", company.getName());
         while (true) {
             System.out.println("\n1. Car list\n2. Create a car\n0. Back");

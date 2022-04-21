@@ -49,20 +49,19 @@ public class MenuService {
             List<Company> companies = companyDAO.getAllCompanies();
             if (!companies.isEmpty()) {
                 System.out.printf("\nChoose a company:\n%s\n0. Back\n", getAsIndexedList(companies));
-                var company = chooseElementFromList(companies);
+                Company company = (Company) chooseElementFromList(companies);
                 if (company != null) {
                     List<Car> cars = carDAO.getAllAvailableCompanyCars();
                     if (!cars.isEmpty()) {
                         System.out.printf("\nChoose a car:\n%s\n0. Back\n", getAsIndexedList(cars));
-                        var car = chooseElementFromList(cars);
+                        Car car = (Car) chooseElementFromList(cars);
                         if (car != null) {
-                            customerDAO.updateRentedCar((Car) car, customer);
-                            System.out.printf("\nYou rented '%s'\n", ((Car) car).getName());
-                            customer.setRentedCar((Car) car);
+                            customerDAO.updateRentedCar(car, customer);
+                            System.out.printf("\nYou rented '%s'\n", car.getName());
+                            customer.setRentedCar(car);
                         }
                     } else {
-                        System.out.printf("\nNo available cars in the '%s' company\n\n",
-                                ((Company) company).getName());
+                        System.out.printf("\nNo available cars in the '%s' company\n\n", company.getName());
                     }
                 }
             } else {
@@ -102,9 +101,9 @@ public class MenuService {
         List<Company> companies = companyDAO.getAllCompanies();
         if (!companies.isEmpty()) {
             System.out.printf("\nChoose a company:\n%s\n0. Back\n", getAsIndexedList(companies));
-            var company = chooseElementFromList(companies);
+            Company company = (Company) chooseElementFromList(companies);
             if (company != null) {
-                view.companyMenu((Company) company);
+                view.companyMenu(company);
             }
         } else {
             System.out.println("\nThe company list is empty!\n");
@@ -115,9 +114,9 @@ public class MenuService {
         List<Customer> customers = customerDAO.getAllCustomers();
         if (!customers.isEmpty()) {
             System.out.printf("\nCustomer list:\n%s\n0. Back\n", getAsIndexedList(customers));
-            var customer = chooseElementFromList(customers);
+            Customer customer = (Customer) chooseElementFromList(customers);
             if (customer != null) {
-                view.customerMenu((Customer) customer);
+                view.customerMenu(customer);
             }
         } else {
             System.out.println("\nThe customer list is empty!");
@@ -134,7 +133,7 @@ public class MenuService {
     }
 
     public <T> String getAsIndexedList(List<T> list) {
-        var tempId = new AtomicInteger(1);
+        AtomicInteger tempId = new AtomicInteger(1);
         return list.stream()
                 .map(c -> {
                     try {
