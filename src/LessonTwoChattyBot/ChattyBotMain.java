@@ -5,7 +5,7 @@ public class ChattyBotMain {
 
 
     public static void main(String[] args) {
-        System.out.println("Fuck u!1");
+        System.out.println("Fuck u!21");
     }
 
 
